@@ -46,7 +46,7 @@ module.exports = class Validations {
 					.string()
 					.required()
 					.max(128)
-					.min(6)
+					.min(5)
 					.error(new CustomError(400, "Password is invalid")),
 			})
 			.validateAsync(data);
