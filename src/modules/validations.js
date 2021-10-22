@@ -41,7 +41,7 @@ module.exports = class Validations {
 					.string()
 					.regex(/^[A-Za-z]{2,}[_-]?[A-Za-z0-9]{2,}$/)
 					.required()
-					.error(new CustomError("Username is invalid")),
+					.error(new CustomError(400, "Username is invalid")),
 				password: joi
 					.string()
 					.required()
