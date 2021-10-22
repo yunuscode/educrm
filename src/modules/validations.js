@@ -1,7 +1,7 @@
 const joi = require("joi");
 
 module.exports = class Validations {
-	static async SignUpValidation(data) {
+	static async SignUpValidation(data, Error) {
 		return await joi
 			.object({
 				name: joi
@@ -34,20 +34,20 @@ module.exports = class Validations {
 			.validateAsync(data);
 	}
 
-	static async SignInValidation(data) {
+	static async SignInValidation(data, CustomError) {
 		return await joi
 			.object({
+				username: joi
+					.string()
+					.regex(/^[A-Za-z]{2,}[_-]?[A-Za-z0-9]{2,}$/)
+					.required()
+					.error(new CustomError("Username is invalid")),
 				password: joi
 					.string()
 					.required()
 					.max(128)
 					.min(6)
-					.error(new Error("Password is invalid")),
-				username: joi
-					.string()
-					.regex(/^[A-Za-z]{2,}[_-]?[A-Za-z0-9]{2,}$/)
-					.required()
-					.error(new Error("Username is invalid")),
+					.error(new CustomError(400, "Password is invalid")),
 			})
 			.validateAsync(data);
 	}

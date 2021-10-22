@@ -1,3 +1,9 @@
+const errorHandler = require("../helpers/errorHandler");
+
 module.exports = async function (app) {
-	app.use("/users", require("./users/UserRoute"));
+	try {
+		app.use("/users", require("./users/UserRoute"));
+	} finally {
+		app.use(errorHandler);
+	}
 };
