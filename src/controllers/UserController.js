@@ -76,4 +76,37 @@ module.exports = class UserController {
 			next(error);
 		}
 	}
+
+	static async UserGetController(req, res, next) {
+		try {
+			permissionChecker("admin", req.user_permissions, res.error);
+
+			const page = req.query.page ? req.query.page - 1 : 0;
+			const limit = req.query.limit || 15;
+			const order = req.query.order == "DESC" ? "DESC" : "ASC";
+
+			const users = await req.db.users.findAll({
+				attributes: [
+					"user_id",
+					"user_name",
+					"user_username",
+					"user_gender",
+				],
+				raw: true,
+				limit: limit,
+				offset: page * 15,
+				order: [["createdAt", order]],
+			});
+
+			res.status(200).json({
+				ok: true,
+				message: "Users list",
+				data: {
+					users,
+				},
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
 };
