@@ -2,4 +2,4 @@
 
 ## Documentations:
 
--   [User Documentation]("https://github.com/muhammadyunusuz/educrm/blob/main/src/docs/user.md")
+-   [User Documentation]("/src/docs/user.md")
