@@ -51,4 +51,24 @@ module.exports = class Validations {
 			})
 			.validateAsync(data);
 	}
+	static async AddTeacherValidation(data, CustomError) {
+		return await joi
+			.object({
+				user_id: joi
+					.string()
+					.uuid()
+					.required()
+					.error(new CustomError(400, "User id is invalid")),
+				phone: joi
+					.string()
+					.required()
+					.error(new CustomError(400, "Phone is invalid"))
+					.regex(/^998(9[012345789]|6[125679]|7[01234569])[0-9]{7}$/),
+				skills: joi
+					.array()
+					.items(joi.string().min(2).max(32))
+					.required(),
+			})
+			.validateAsync(data);
+	}
 };

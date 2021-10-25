@@ -42,4 +42,20 @@ module.exports = async (db) => {
 			allowNull: false,
 		},
 	});
+
+	await db.users.hasOne(db.teachers, {
+		foreignKey: {
+			name: "user_id",
+			allowNull: false,
+			unique: true,
+		},
+	});
+
+	await db.teachers.belongsTo(db.users, {
+		foreignKey: {
+			name: "user_id",
+			allowNull: false,
+			unique: true,
+		},
+	});
 };
