@@ -1,5 +1,6 @@
 const {
 	CourseCreatePostController,
+	CourseGetController,
 } = require("../../controllers/CourseController");
 const authMiddleware = require("../../middlewares/authMiddleware");
 const permissionMiddleware = require("../../middlewares/permissionMiddleware");
@@ -18,5 +19,7 @@ CourseRoute.post(
 	}),
 	CourseCreatePostController
 );
+
+CourseRoute.get("/", CourseGetController);
 
 module.exports = CourseRoute;

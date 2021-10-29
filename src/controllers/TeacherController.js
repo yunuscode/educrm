@@ -91,6 +91,8 @@ module.exports = class TeacherController {
 			});
 
 			res.json({
+				ok: true,
+				message: "Teachers",
 				data: teachers,
 			});
 		} catch (error) {

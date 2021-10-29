@@ -7,7 +7,7 @@ module.exports = class CourseController {
 		try {
 			permissionChecker("admin", req.user_permissions, res.error);
 
-			const photo = req.files.photo;
+			const photo = req?.files?.photo;
 
 			if (photo && photo?.size > 5 * 1024 * 1024) {
 				throw new res.error(
@@ -42,6 +42,29 @@ module.exports = class CourseController {
 			res.status(201).json({
 				ok: true,
 				message: "Course created successfully",
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	static async CourseGetController(req, res, next) {
+		try {
+			const limit = req.query.limit || 15;
+			const offset = req.query.offset - 1 || 0;
+
+			const courses = await req.db.courses.findAll({
+				raw: true,
+				limit,
+				offset: offset * 15,
+			});
+
+			res.status(200).json({
+				ok: true,
+				message: "Courses",
+				data: {
+					courses,
+				},
 			});
 		} catch (error) {
 			next(error);
