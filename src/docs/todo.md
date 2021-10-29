@@ -12,3 +12,11 @@
     - Address
 
 2. Permission (Keyin)
+
+3. Course
+
+    - Title
+    - Description
+    - Photo
+    - Price
+    - Length
