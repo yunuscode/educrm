@@ -1,6 +1,8 @@
 const {
 	CourseCreatePostController,
 	CourseGetController,
+	CourseUpdatePutController,
+	CourseGetOneController,
 } = require("../../controllers/CourseController");
 const authMiddleware = require("../../middlewares/authMiddleware");
 const permissionMiddleware = require("../../middlewares/permissionMiddleware");
@@ -20,6 +22,17 @@ CourseRoute.post(
 	CourseCreatePostController
 );
 
+CourseRoute.put(
+	"/:course_id",
+	expressFileUploadMiddleware({
+		abortOnLimit: true,
+		safeFileNames: true,
+	}),
+	CourseUpdatePutController
+);
+
 CourseRoute.get("/", CourseGetController);
+
+CourseRoute.get("/:course_id", CourseGetOneController);
 
 module.exports = CourseRoute;
