@@ -32,7 +32,7 @@ module.exports = async (sequelize, Sequelize) => {
 		},
 		applicant_status: {
 			type: Sequelize.ENUM,
-			values: ["waiting", "active", "cancalled"],
+			values: ["waiting", "active", "cancelled"],
 		},
 	});
 };

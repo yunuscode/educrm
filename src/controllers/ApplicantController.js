@@ -1,5 +1,8 @@
 const permissionChecker = require("../helpers/permissionChecker");
-const { AddApplicantValidation } = require("../modules/validations");
+const {
+	AddApplicantValidation,
+	UpdateApplicantValidation,
+} = require("../modules/validations");
 
 module.exports = class ApplicantController {
 	static async ApplicantGetController(req, res, next) {
@@ -14,9 +17,16 @@ module.exports = class ApplicantController {
 			const offset = req.query.offset - 1 || 0;
 
 			const applicants = await req.db.applicants.findAll({
-				raw: true,
 				limit,
 				offset: offset * 15,
+				include: [
+					{
+						model: req.db.users,
+					},
+					{
+						model: req.db.courses,
+					},
+				],
 			});
 
 			res.json({
@@ -70,6 +80,54 @@ module.exports = class ApplicantController {
 			res.status(201).json({
 				ok: true,
 				message: "Created successfully",
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	static async ApplicantPutController(req, res, next) {
+		try {
+			permissionChecker(
+				["admin", "operator"],
+				req.user_permissions,
+				res.error
+			);
+
+			const applicant_id = req.params.applicant_id;
+
+			const applicant = await req.db.applicants.findOne({
+				where: {
+					applicant_id,
+				},
+			});
+
+			if (!applicant) {
+				throw new res.error(404, "Course is not found");
+			}
+
+			const data = await UpdateApplicantValidation(req.body, res.error);
+
+			await req.db.applicants.update(
+				{
+					applicant_name: data.name,
+					applicant_gender: data.gender,
+					applicant_birth_date: data.birth_date,
+					applicant_description: data.description,
+					applicant_phone: data.phone,
+					applicant_source: data.source,
+					applicant_status: data.status,
+				},
+				{
+					where: {
+						applicant_id,
+					},
+				}
+			);
+
+			res.status(200).json({
+				ok: true,
+				message: "Updated successfully",
 			});
 		} catch (error) {
 			next(error);
