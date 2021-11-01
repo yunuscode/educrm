@@ -31,3 +31,11 @@
     - description
     - course
     - status
+
+5. Groups
+    - name (AutoGenerate)
+    - schedule
+    - time
+    - lesson_duration
+    - course_duration
+    - teacher_id
