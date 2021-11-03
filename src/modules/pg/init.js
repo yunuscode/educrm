@@ -18,4 +18,7 @@ module.exports = async function init(db) {
 			permission_id: admin_permission.dataValues.permission_id,
 		});
 	}
+
+	// const users = await db.appicants.findAll({ raw: true });
+	// console.log(users);
 };

@@ -33,9 +33,18 @@
     - status
 
 5. Groups
+
     - name (AutoGenerate)
     - schedule
     - time
     - lesson_duration
     - course_duration
     - teacher_id
+
+    <!-- Guruh yaratish => course_id, teacher_id,  -->
+
+    Group #1
+
+    students: []
+
+    <!-- Guruh yaratish, o'zgartisih, student qo'shish, studentni delete qilish -->
